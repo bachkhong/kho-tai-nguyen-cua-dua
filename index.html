@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kho Tài Nguyên Học Data — DUA Edu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-deep:   #1A5C2A;
+    --green-mid:    #2E8B45;
+    --green-bright: #3DB558;
+    --green-light:  #7DCE90;
+    --green-pale:   #C8EECE;
+    --green-bg:     #F0FAF2;
+    --white:        #FFFFFF;
+    --ink:          #111C14;
+    --ink-soft:     #3A4D3E;
+    --ink-mute:     #6B8070;
+    --rule:         #D4EDDA;
+    --badge-free:   #E8F8ED;
+    --badge-part:   #FFF8E6;
+    --badge-acct:   #EEF2FF;
+
+    --font-body: 'Be Vietnam Pro', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    --radius-sm: 6px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+    --radius-xl: 32px;
+
+    --shadow-card: 0 2px 12px rgba(30,90,50,0.08);
+    --shadow-hover: 0 8px 32px rgba(30,90,50,0.16);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--white);
+    color: var(--ink);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--rule);
+    padding: 0 clamp(16px, 4vw, 48px);
+    display: flex; align-items: center; gap: 8px; height: 60px;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-logo svg { width: 32px; height: 32px; }
+  .nav-logo-text { font-weight: 800; font-size: 17px; color: var(--green-deep); letter-spacing: -0.3px; }
+  .nav-links { display: flex; gap: 4px; margin-left: auto; }
+  .nav-links a {
+    font-size: 13px; font-weight: 600; color: var(--ink-soft);
+    text-decoration: none; padding: 6px 12px; border-radius: var(--radius-sm);
+    transition: all 0.2s;
+  }
+  .nav-links a:hover { background: var(--green-bg); color: var(--green-deep); }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(160deg, var(--green-deep) 0%, var(--green-mid) 55%, var(--green-bright) 100%);
+    position: relative; overflow: hidden;
+    padding: clamp(60px, 10vw, 100px) clamp(16px, 5vw, 80px) clamp(60px, 8vw, 80px);
+    text-align: center;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 120%, rgba(255,255,255,0.07) 0%, transparent 70%);
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25);
+    color: rgba(255,255,255,0.9); font-size: 12px; font-weight: 600; letter-spacing: 1.2px;
+    text-transform: uppercase; padding: 6px 16px; border-radius: 999px;
+    margin-bottom: 24px;
+  }
+  .hero-eyebrow span { width: 6px; height: 6px; border-radius: 50%; background: var(--green-pale); display: block; }
+  .hero h1 {
+    font-size: clamp(36px, 6vw, 72px); font-weight: 900; color: var(--white);
+    letter-spacing: -1.5px; line-height: 1.05;
+    margin-bottom: 16px;
+  }
+  .hero h1 em { font-style: normal; color: var(--green-pale); }
+  .hero-sub {
+    font-size: clamp(14px, 2vw, 18px); color: rgba(255,255,255,0.82);
+    max-width: 620px; margin: 0 auto 32px;
+  }
+  .hero-quote {
+    display: inline-block;
+    background: rgba(255,255,255,0.1); border-left: 3px solid var(--green-pale);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    padding: 14px 20px; font-size: 14px; font-style: italic;
+    color: rgba(255,255,255,0.85); max-width: 680px; text-align: left;
+    margin-bottom: 40px;
+  }
+  .hero-tags { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 48px; }
+  .hero-tag {
+    background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
+    color: white; font-size: 13px; font-weight: 600; padding: 8px 18px;
+    border-radius: 999px; display: flex; align-items: center; gap: 8px;
+  }
+  .hero-tag .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green-pale); flex-shrink: 0; }
+  .hero-nav-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px; max-width: 900px; margin: 0 auto;
+  }
+  .hero-nav-btn {
+    background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.22);
+    color: white; font-size: 13px; font-weight: 600; font-family: var(--font-body);
+    padding: 12px 16px; border-radius: var(--radius-md); cursor: pointer;
+    text-decoration: none; transition: all 0.2s; display: block; text-align: center;
+  }
+  .hero-nav-btn:hover { background: rgba(255,255,255,0.22); transform: translateY(-2px); }
+
+  /* ── CONTAINER ── */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 48px); }
+
+  /* ── SECTION HEADERS ── */
+  .section { padding: clamp(48px, 8vw, 80px) 0; }
+  .section-header { text-align: center; margin-bottom: 48px; }
+  .section-eyebrow {
+    font-size: 11px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase;
+    color: var(--green-mid); margin-bottom: 10px;
+  }
+  .section-title {
+    font-size: clamp(24px, 4vw, 38px); font-weight: 800; color: var(--ink);
+    letter-spacing: -0.5px; line-height: 1.2;
+  }
+  .section-title em { font-style: normal; color: var(--green-mid); }
+  .section-desc { color: var(--ink-mute); font-size: 15px; max-width: 560px; margin: 12px auto 0; }
+
+  /* ── ROADMAP TABLE ── */
+  .roadmap-wrapper { overflow-x: auto; border-radius: var(--radius-lg); box-shadow: var(--shadow-card); }
+  .roadmap-table { width: 100%; border-collapse: collapse; background: white; }
+  .roadmap-table thead tr {
+    background: linear-gradient(90deg, var(--green-deep), var(--green-mid));
+    color: white;
+  }
+  .roadmap-table th {
+    padding: 14px 18px; font-size: 12px; font-weight: 700;
+    letter-spacing: 0.8px; text-transform: uppercase; text-align: left;
+  }
+  .roadmap-table td { padding: 14px 18px; font-size: 14px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  .roadmap-table tr:last-child td { border-bottom: none; }
+  .roadmap-table tr:hover td { background: var(--green-bg); }
+  .stage-badge {
+    display: inline-block; font-size: 11px; font-weight: 700;
+    padding: 3px 10px; border-radius: 999px; white-space: nowrap;
+  }
+  .stage-0 { background: #E8F8ED; color: var(--green-deep); }
+  .stage-1 { background: #D4F0DF; color: var(--green-deep); }
+  .stage-2 { background: #BEE6CF; color: #1A5C2A; }
+  .stage-3 { background: #A8DCBF; color: #1A5C2A; }
+  .stage-4 { background: #92D2AF; color: #145020; }
+  .stage-5 { background: #7CC89F; color: #0F3D18; }
+  .stage-6 { background: var(--green-mid); color: white; }
+
+  /* ── KNOWLEDGE MAP ── */
+  .knowledge-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+  .knowledge-card {
+    background: white; border: 1px solid var(--rule);
+    border-radius: var(--radius-lg); padding: 24px; position: relative;
+    box-shadow: var(--shadow-card); transition: all 0.25s;
+    overflow: hidden;
+  }
+  .knowledge-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  }
+  .knowledge-card.excel::before { background: linear-gradient(90deg, #217346, #3DB558); }
+  .knowledge-card.sheets::before { background: linear-gradient(90deg, #0F9D58, #34A853); }
+  .knowledge-card.sql::before { background: linear-gradient(90deg, #CC2929, #E05F5F); }
+  .knowledge-card.powerbi::before { background: linear-gradient(90deg, #F2C811, #E8A800); }
+  .knowledge-card.python::before { background: linear-gradient(90deg, #3776AB, #5A9FD4); }
+  .knowledge-card.storytelling::before { background: linear-gradient(90deg, #9B59B6, #C39BD3); }
+  .knowledge-card.workplace::before { background: linear-gradient(90deg, var(--green-deep), var(--green-bright)); }
+  .knowledge-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-3px); }
+  .knowledge-card-icon {
+    width: 44px; height: 44px; border-radius: var(--radius-md);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; margin-bottom: 14px;
+  }
+  .knowledge-card h3 { font-size: 17px; font-weight: 700; color: var(--ink); margin-bottom: 12px; }
+  .knowledge-card ul { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+  .knowledge-card ul li {
+    font-size: 13px; color: var(--ink-soft); display: flex; align-items: flex-start; gap: 8px;
+  }
+  .knowledge-card ul li::before {
+    content: '▸'; color: var(--green-mid); font-size: 11px; margin-top: 2px; flex-shrink: 0;
+  }
+
+  /* ── RESOURCES ── */
+  .resource-section-tabs {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; justify-content: center;
+  }
+  .resource-tab {
+    font-size: 13px; font-weight: 600; padding: 8px 18px; border-radius: 999px;
+    border: 1.5px solid var(--rule); background: white; color: var(--ink-soft);
+    cursor: pointer; transition: all 0.2s; font-family: var(--font-body);
+  }
+  .resource-tab.active,
+  .resource-tab:hover { background: var(--green-deep); color: white; border-color: var(--green-deep); }
+  .resource-panel { display: none; }
+  .resource-panel.active { display: block; }
+  .resource-list { display: flex; flex-direction: column; gap: 10px; }
+  .resource-item {
+    display: flex; align-items: center; gap: 14px; padding: 14px 18px;
+    background: white; border: 1px solid var(--rule); border-radius: var(--radius-md);
+    transition: all 0.2s; text-decoration: none;
+  }
+  .resource-item:hover { border-color: var(--green-light); box-shadow: var(--shadow-card); transform: translateX(4px); }
+  .resource-badge {
+    font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 999px;
+    white-space: nowrap; flex-shrink: 0;
+  }
+  .badge-free { background: var(--badge-free); color: var(--green-deep); }
+  .badge-part { background: var(--badge-part); color: #8A6600; }
+  .badge-acct { background: var(--badge-acct); color: #4A5BA0; }
+  .resource-name { font-weight: 600; font-size: 14px; color: var(--ink); }
+  .resource-desc { font-size: 12.5px; color: var(--ink-mute); margin-top: 2px; }
+  .resource-arrow { margin-left: auto; color: var(--ink-mute); font-size: 16px; flex-shrink: 0; }
+
+  /* ── CHALLENGES / MOCK ── */
+  .sql-schedule { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 48px; }
+  .week-card {
+    background: white; border: 1px solid var(--rule); border-radius: var(--radius-md);
+    padding: 20px; box-shadow: var(--shadow-card); position: relative; overflow: hidden;
+  }
+  .week-card::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--green-deep), var(--green-bright));
+  }
+  .week-label { font-size: 11px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--green-mid); margin-bottom: 8px; }
+  .week-card h4 { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 10px; }
+  .week-card p { font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .week-source { font-size: 11.5px; color: var(--ink-mute); margin-top: 10px; font-style: italic; }
+
+  .mock-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .mock-card {
+    background: white; border: 1px solid var(--rule); border-radius: var(--radius-md);
+    padding: 20px; box-shadow: var(--shadow-card);
+  }
+  .mock-card h4 {
+    font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px;
+    color: var(--green-deep); margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--rule);
+  }
+  .mock-card ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .mock-card ul li { font-size: 13px; color: var(--ink-soft); display: flex; gap: 8px; align-items: flex-start; }
+  .mock-card ul li::before { content: '→'; color: var(--green-light); flex-shrink: 0; }
+
+  .question-table-wrapper { overflow-x: auto; border-radius: var(--radius-md); box-shadow: var(--shadow-card); margin-top: 32px; }
+  .question-table { width: 100%; border-collapse: collapse; background: white; font-size: 13.5px; }
+  .question-table thead tr { background: var(--green-deep); color: white; }
+  .question-table th { padding: 12px 16px; text-align: left; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; }
+  .question-table td { padding: 11px 16px; border-bottom: 1px solid var(--rule); color: var(--ink-soft); }
+  .question-table tr:last-child td { border-bottom: none; }
+  .question-table tr:hover td { background: var(--green-bg); }
+  .level-easy { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: 11px; font-weight: 700; background: #E8F8ED; color: var(--green-deep); }
+  .level-medium { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: 11px; font-weight: 700; background: #FFF8E6; color: #8A6600; }
+  .level-hard { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: 11px; font-weight: 700; background: #FFE8E8; color: #B00020; }
+  .level-mock { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: 11px; font-weight: 700; background: #EEF2FF; color: #4A5BA0; }
+
+  /* ── PROJECTS ── */
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+  .project-card {
+    background: white; border: 1px solid var(--rule); border-radius: var(--radius-lg);
+    padding: 24px; box-shadow: var(--shadow-card); transition: all 0.25s;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .project-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-3px); }
+  .project-num {
+    font-family: var(--font-mono); font-size: 11px; font-weight: 600; color: var(--green-mid);
+    background: var(--green-bg); padding: 3px 9px; border-radius: var(--radius-sm);
+    display: inline-block; width: fit-content;
+  }
+  .project-card h3 { font-size: 16px; font-weight: 700; color: var(--ink); line-height: 1.3; }
+  .project-context { font-size: 13px; color: var(--ink-mute); font-style: italic; border-left: 2px solid var(--green-pale); padding-left: 10px; }
+  .project-meta { display: flex; flex-wrap: wrap; gap: 8px; }
+  .project-tool {
+    font-size: 11.5px; font-weight: 600; padding: 4px 10px; border-radius: var(--radius-sm);
+    background: var(--green-bg); color: var(--green-deep);
+  }
+  .project-steps { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .project-steps li { font-size: 13px; color: var(--ink-soft); display: flex; gap: 8px; align-items: flex-start; }
+  .project-steps li::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--green-light); flex-shrink: 0; margin-top: 6px; }
+  .project-output {
+    font-size: 12.5px; color: var(--green-deep); font-weight: 600;
+    background: var(--green-bg); padding: 8px 12px; border-radius: var(--radius-sm);
+    margin-top: auto;
+  }
+  .project-output::before { content: '📦 Output: '; }
+
+  /* ── CHECKLIST ── */
+  .checklist-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .checklist-card {
+    background: white; border: 1px solid var(--rule); border-radius: var(--radius-lg);
+    padding: 24px; box-shadow: var(--shadow-card);
+  }
+  .checklist-card h3 { font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--rule); }
+  .checklist-item {
+    display: flex; align-items: flex-start; gap: 10px; padding: 8px 0;
+    border-bottom: 1px solid var(--green-bg); font-size: 13.5px; color: var(--ink-soft);
+  }
+  .checklist-item:last-child { border-bottom: none; }
+  .checklist-box {
+    width: 18px; height: 18px; border: 2px solid var(--green-light); border-radius: 4px;
+    flex-shrink: 0; margin-top: 1px;
+  }
+
+  /* ── PORTFOLIO RUBRIC ── */
+  .rubric-wrapper { overflow-x: auto; border-radius: var(--radius-lg); box-shadow: var(--shadow-card); }
+  .rubric-table { width: 100%; border-collapse: collapse; background: white; }
+  .rubric-table thead tr { background: linear-gradient(90deg, var(--green-deep), var(--green-mid)); color: white; }
+  .rubric-table th { padding: 14px 18px; font-size: 12px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; text-align: left; }
+  .rubric-table td { padding: 13px 18px; font-size: 13.5px; border-bottom: 1px solid var(--rule); color: var(--ink-soft); vertical-align: top; }
+  .rubric-table tr:last-child td { border-bottom: none; }
+  .rubric-table tr:hover td { background: var(--green-bg); }
+  .rubric-table td:first-child { font-weight: 700; color: var(--ink); }
+
+  .timeline-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 32px; }
+  .timeline-card {
+    background: white; border: 1px solid var(--rule); border-radius: var(--radius-md);
+    padding: 20px; box-shadow: var(--shadow-card); text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .timeline-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--green-deep), var(--green-bright));
+  }
+  .timeline-month { font-family: var(--font-mono); font-size: 12px; font-weight: 600; color: var(--green-mid); margin-bottom: 8px; }
+  .timeline-card h4 { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 8px; line-height: 1.3; }
+  .timeline-card p { font-size: 12.5px; color: var(--ink-mute); }
+
+  /* ── SCHEDULE & HABIT ── */
+  .schedule-wrapper { overflow-x: auto; border-radius: var(--radius-lg); box-shadow: var(--shadow-card); margin-bottom: 48px; }
+  .schedule-table { width: 100%; border-collapse: collapse; background: white; }
+  .schedule-table thead tr { background: linear-gradient(90deg, var(--green-deep), var(--green-mid)); color: white; }
+  .schedule-table th { padding: 13px 16px; font-size: 12px; font-weight: 700; letter-spacing: 0.7px; text-transform: uppercase; text-align: left; }
+  .schedule-table td { padding: 12px 16px; font-size: 13.5px; border-bottom: 1px solid var(--rule); color: var(--ink-soft); }
+  .schedule-table tr:last-child td { border-bottom: none; }
+  .schedule-table tr:hover td { background: var(--green-bg); }
+  .schedule-table td:first-child { font-weight: 700; color: var(--green-deep); }
+
+  .habit-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+  .habit-card {
+    background: white; border: 1px solid var(--rule); border-radius: var(--radius-md);
+    padding: 16px; box-shadow: var(--shadow-card);
+  }
+  .habit-week { font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--green-mid); margin-bottom: 10px; }
+  .habit-checks { display: flex; gap: 6px; }
+  .habit-check {
+    display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1;
+  }
+  .habit-check span { font-size: 10px; color: var(--ink-mute); font-weight: 600; }
+  .habit-checkbox {
+    width: 28px; height: 28px; border: 2px solid var(--green-light); border-radius: 6px;
+    cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center;
+  }
+  .habit-checkbox:hover { background: var(--green-pale); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--green-deep); color: rgba(255,255,255,0.7);
+    text-align: center; padding: 40px 20px;
+  }
+  footer .footer-logo { font-size: 20px; font-weight: 800; color: white; margin-bottom: 10px; }
+  footer p { font-size: 13px; }
+  footer .footer-motto { color: rgba(255,255,255,0.85); font-style: italic; font-size: 14px; margin-top: 14px; max-width: 600px; margin-left: auto; margin-right: auto; }
+
+  /* ── DIVIDERS ── */
+  .section-divider { height: 1px; background: var(--rule); margin: 0; }
+  .section-alt { background: var(--green-bg); }
+
+  /* ── COMPARISON TABLE ── */
+  .comparison-wrapper { overflow-x: auto; border-radius: var(--radius-lg); box-shadow: var(--shadow-card); }
+  .comparison-table { width: 100%; border-collapse: collapse; background: white; }
+  .comparison-table thead tr th:first-child { background: #CC4444; }
+  .comparison-table thead tr th:last-child { background: var(--green-mid); }
+  .comparison-table th { padding: 14px 20px; font-size: 13px; font-weight: 700; color: white; text-align: left; }
+  .comparison-table td { padding: 12px 20px; font-size: 13.5px; border-bottom: 1px solid var(--rule); color: var(--ink-soft); vertical-align: top; }
+  .comparison-table tr:last-child td { border-bottom: none; }
+  .comparison-table tr:hover td { background: var(--green-bg); }
+  .comparison-table td.bad { color: #AA2222; }
+  .comparison-table td.good { color: var(--green-deep); font-weight: 500; }
+
+  /* ── SCROLL TO TOP ── */
+  .back-top {
+    position: fixed; bottom: 24px; right: 24px; z-index: 99;
+    width: 44px; height: 44px; background: var(--green-deep); color: white;
+    border: none; border-radius: 50%; cursor: pointer; font-size: 18px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2); transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .back-top:hover { background: var(--green-bright); transform: translateY(-2px); }
+
+  @media (max-width: 600px) {
+    .nav-links { display: none; }
+    .hero h1 { font-size: 30px; }
+    .knowledge-grid { grid-template-columns: 1fr; }
+    .projects-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <svg viewBox="0 0 32 32" fill="none">
+      <rect width="32" height="32" rx="8" fill="#1A5C2A"/>
+      <path d="M8 22 L16 10 L24 22" stroke="#7DCE90" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M11 18 L21 18" stroke="#7DCE90" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    <span class="nav-logo-text">DUA Edu</span>
+  </a>
+  <div class="nav-links">
+    <a href="#roadmap">Roadmap</a>
+    <a href="#knowledge">Kiến thức</a>
+    <a href="#resources">Tài nguyên</a>
+    <a href="#challenge">Challenge</a>
+    <a href="#projects">Projects</a>
+    <a href="#checklist">Checklist</a>
+    <a href="#portfolio">Portfolio</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow"><span></span>Tài liệu học tập · Hà Nội – 6.2026</div>
+  <h1>Kho Tài Nguyên<br><em>Học Data</em></h1>
+  <p class="hero-sub">Từ newbie đến senior Data Analyst bằng lộ trình, nguồn học miễn phí, challenge, mock interview và project thực chiến</p>
+  <div class="hero-quote">
+    "Không phải kho link để lưu cho đẹp. Đây là bản đồ khổ luyện: học - làm - kiểm tra - kể chuyện - đi làm như analyst thật."
+  </div>
+  <div class="hero-tags">
+    <div class="hero-tag"><span class="dot"></span>Excel / Sheets — Làm sạch, tổng hợp, dashboard nhanh</div>
+    <div class="hero-tag"><span class="dot"></span>SQL / Power BI — Truy vấn, mô hình hóa, dashboard quyết định</div>
+    <div class="hero-tag"><span class="dot"></span>Python / Storytelling — EDA, automation, kể chuyện bằng dữ liệu</div>
+  </div>
+  <div class="hero-nav-grid">
+    <a href="#roadmap" class="hero-nav-btn">📍 Roadmap</a>
+    <a href="#knowledge" class="hero-nav-btn">🧠 Knowledge Map</a>
+    <a href="#resources" class="hero-nav-btn">🔗 Tài nguyên</a>
+    <a href="#challenge" class="hero-nav-btn">⚔️ Challenge & SQL</a>
+    <a href="#projects" class="hero-nav-btn">🗂 20 Projects</a>
+    <a href="#checklist" class="hero-nav-btn">✅ Checklist</a>
+    <a href="#portfolio" class="hero-nav-btn">🏆 Portfolio</a>
+    <a href="#appendix" class="hero-nav-btn">📆 Lịch & Tracker</a>
+  </div>
+</div>
+
+<!-- TUYÊN NGÔN -->
+<div class="section-alt">
+<section class="section container" id="manifesto">
+  <div class="section-header">
+    <div class="section-eyebrow">Tuyên ngôn</div>
+    <h2 class="section-title">Học Data bằng <em>máu và nước mắt</em></h2>
+    <p class="section-desc">Một analyst mạnh không chỉ biết viết SQL hay kéo dashboard — người đó biết đặt câu hỏi, hiểu dữ liệu có thể sai ở đâu, chứng minh insight bằng số liệu.</p>
+  </div>
+  <div class="comparison-wrapper">
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th>❌ Không học kiểu này</th>
+          <th>✅ Học kiểu Dứa đề xuất</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="bad">Xem 20 video nhưng không làm bài.</td><td class="good">Mỗi video phải biến thành 1 query, 1 chart, 1 note hoặc 1 mini case.</td></tr>
+        <tr><td class="bad">Học tool rời rạc.</td><td class="good">Học theo bài toán: doanh thu giảm, retention thấp, campaign lỗ, dashboard lệch số.</td></tr>
+        <tr><td class="bad">Làm dashboard đẹp nhưng không có insight.</td><td class="good">Mỗi dashboard có câu hỏi trung tâm, KPI chính, breakdown, action note.</td></tr>
+        <tr><td class="bad">Chỉ ghi "em biết SQL/Power BI".</td><td class="good">Có project, README, SQL file, dashboard, data dictionary, insight memo.</td></tr>
+        <tr><td class="bad">Kết luận cảm tính.</td><td class="good">Kết luận theo khung: phát hiện → bằng chứng → nguyên nhân khả nghi → đề xuất.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ROADMAP -->
+<section class="section container" id="roadmap">
+  <div class="section-header">
+    <div class="section-eyebrow">Giai đoạn</div>
+    <h2 class="section-title">Roadmap từ <em>Newbie đến Senior</em></h2>
+    <p class="section-desc">Lộ trình lõi: Excel/Sheets → SQL → Power BI → Python → Storytelling → Workplace</p>
+  </div>
+  <div class="roadmap-wrapper">
+    <table class="roadmap-table">
+      <thead>
+        <tr>
+          <th>Giai đoạn</th>
+          <th>Trọng tâm</th>
+          <th>Nội dung</th>
+          <th>Thời lượng</th>
+          <th>Sản phẩm</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="stage-badge stage-0">GĐ 0</span></td><td><strong>Tư duy học Data</strong></td><td>Vai trò DA, cách đặt câu hỏi, đọc dữ liệu, viết insight</td><td>1–2 tuần</td><td>20 câu hỏi business + 10 ví dụ insight</td></tr>
+        <tr><td><span class="stage-badge stage-1">GĐ 1</span></td><td><strong>Excel + Google Sheets</strong></td><td>Bảng dữ liệu, hàm, lookup, pivot, chart, cleaning, dashboard</td><td>4–6 tuần</td><td>Dashboard + 5 adhoc analysis</td></tr>
+        <tr><td><span class="stage-badge stage-2">GĐ 2</span></td><td><strong>SQL Server / T-SQL</strong></td><td>SELECT, WHERE, JOIN, GROUP BY, CASE WHEN, CTE, window functions</td><td>6–10 tuần</td><td>SQL capstone: tìm nguyên nhân doanh thu giảm</td></tr>
+        <tr><td><span class="stage-badge stage-3">GĐ 3</span></td><td><strong>Power BI</strong></td><td>Power Query, data model, relationship, DAX, dashboard design</td><td>8–12 tuần</td><td>2 dashboard: business overview + deep-dive</td></tr>
+        <tr><td><span class="stage-badge stage-4">GĐ 4</span></td><td><strong>Python for Data</strong></td><td>Python basics, Pandas, NumPy, EDA, visualization, automation</td><td>8–12 tuần</td><td>Notebook EDA + automation script + report</td></tr>
+        <tr><td><span class="stage-badge stage-5">GĐ 5</span></td><td><strong>Storytelling + Statistics</strong></td><td>Chart choice, narrative, cohort, funnel, RFM, A/B testing</td><td>8–12 tuần</td><td>Slide/report kể chuyện bằng data</td></tr>
+        <tr><td><span class="stage-badge stage-6">GĐ 6</span></td><td><strong>Đi làm như analyst thật</strong></td><td>Stakeholder, data quality, production DB, documentation, Git</td><td>Liên tục</td><td>Portfolio 10–20 project + mock interview</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="margin-top:48px;">
+    <h3 style="font-size:20px;font-weight:800;color:var(--ink);margin-bottom:20px;letter-spacing:-0.3px;">Level-up Milestones</h3>
+    <div class="roadmap-wrapper">
+      <table class="roadmap-table">
+        <thead><tr><th>Level</th><th>Bạn phải làm được</th><th>Dấu hiệu đã qua level</th></tr></thead>
+        <tbody>
+          <tr><td><span class="stage-badge stage-1">Newbie</span></td><td>Đọc bảng, clean lỗi cơ bản, tạo pivot/chart, viết SELECT/WHERE/GROUP BY</td><td>Tự trả lời 20 câu hỏi adhoc đơn giản</td></tr>
+          <tr><td><span class="stage-badge stage-2">Junior DA</span></td><td>JOIN đúng, viết CTE/subquery, dựng dashboard Power BI, giải thích KPI</td><td>Có 3–5 project có bối cảnh và insight</td></tr>
+          <tr><td><span class="stage-badge stage-3">Mid-level DA</span></td><td>Thiết kế model, DAX chắc, phân tích cohort/funnel/RFM, validate số</td><td>Dashboard dùng được cho quyết định</td></tr>
+          <tr><td><span class="stage-badge stage-6">Senior DA</span></td><td>Định nghĩa metric, làm việc với stakeholder, audit data quality</td><td>Dẫn dắt bài toán mơ hồ thành roadmap phân tích rõ ràng</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- CÁCH DÙNG KHO -->
+<div class="section-alt">
+<section class="section container" id="usage">
+  <div class="section-header">
+    <div class="section-eyebrow">Kế hoạch</div>
+    <h2 class="section-title">Cách dùng kho trong <em>12 tháng & 3 năm</em></h2>
+  </div>
+  <div class="roadmap-wrapper" style="margin-bottom:36px;">
+    <table class="roadmap-table">
+      <thead><tr><th>Chu kỳ</th><th>Việc phải làm</th><th>Output</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Mỗi ngày 60–90 phút</strong></td><td>1 bài học nhỏ + 1 bài thực hành + ghi lại lỗi/syntax/insight</td><td>Learning log 5–10 dòng</td></tr>
+        <tr><td><strong>Mỗi tuần</strong></td><td>1 mini case: 5–10 câu adhoc hoặc 1 trang dashboard</td><td>Mini deliverable gửi mentor/reviewer</td></tr>
+        <tr><td><strong>Mỗi tháng</strong></td><td>1 project hoàn chỉnh: data → analysis → dashboard/report → README</td><td>Portfolio project có thể đưa CV</td></tr>
+        <tr><td><strong>Mỗi quý</strong></td><td>Mock interview + audit lại 3 project cũ</td><td>Danh sách điểm yếu và kế hoạch sửa</td></tr>
+        <tr><td><strong>Mỗi năm</strong></td><td>Nâng cấp 3 project thành senior version: quality, docs, performance</td><td>Case study chuyên nghiệp hơn</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div style="background:white;border:1px solid var(--rule);border-radius:var(--radius-lg);padding:28px;box-shadow:var(--shadow-card);">
+    <h3 style="font-size:16px;font-weight:800;color:var(--ink);margin-bottom:16px;">✔️ Checklist học thật, không học ảo</h3>
+    <div class="checklist-item"><div class="checklist-box"></div>Sau mỗi bài SQL phải có ít nhất 3 query tự viết lại không nhìn đáp án.</div>
+    <div class="checklist-item"><div class="checklist-box"></div>Sau mỗi dashboard phải có một trang "logic metric" giải thích cách tính.</div>
+    <div class="checklist-item"><div class="checklist-box"></div>Sau mỗi project phải có README: bối cảnh, dữ liệu, câu hỏi, công cụ, kết quả, giới hạn.</div>
+    <div class="checklist-item"><div class="checklist-box"></div>Sau mỗi insight phải có số liệu chứng minh, không được viết chung chung.</div>
+    <div class="checklist-item"><div class="checklist-box"></div>Mỗi tháng phải review lại project cũ và sửa ít nhất 1 điểm: query, model, chart, narrative hoặc tài liệu.</div>
+  </div>
+</section>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- KNOWLEDGE MAP -->
+<section class="section container" id="knowledge">
+  <div class="section-header">
+    <div class="section-eyebrow">Kỹ năng</div>
+    <h2 class="section-title"><em>Knowledge Map</em> theo công cụ</h2>
+    <p class="section-desc">Những gì bạn cần nắm vững ở từng mảng kỹ năng</p>
+  </div>
+  <div class="knowledge-grid">
+    <div class="knowledge-card excel">
+      <div class="knowledge-card-icon" style="background:#E8F6EE;">📊</div>
+      <h3>Excel</h3>
+      <ul>
+        <li>Bảng dữ liệu sạch: mỗi cột một biến, mỗi dòng một quan sát</li>
+        <li>Hàm: SUMIFS, COUNTIFS, XLOOKUP, INDEX/MATCH, FILTER, SORT, UNIQUE</li>
+        <li>PivotTable/PivotChart: summarize, grouping time, slicer, timeline</li>
+        <li>Power Query: import, append, merge, unpivot, trim/clean</li>
+        <li>Dashboard: KPI card, trend line, breakdown, filter, action note</li>
+      </ul>
+    </div>
+    <div class="knowledge-card sheets">
+      <div class="knowledge-card-icon" style="background:#E6F4EA;">🔢</div>
+      <h3>Google Sheets</h3>
+      <ul>
+        <li>Hàm: QUERY, FILTER, ARRAYFORMULA, IMPORTRANGE, REGEXMATCH</li>
+        <li>Pivot table, chart, conditional formatting, data validation</li>
+        <li>Automation: Apps Script, time trigger, email/report automation</li>
+        <li>Kết nối Looker Studio để làm dashboard nhẹ cho marketing/content</li>
+      </ul>
+    </div>
+    <div class="knowledge-card sql">
+      <div class="knowledge-card-icon" style="background:#FDECEA;">🗄️</div>
+      <h3>SQL Server / T-SQL</h3>
+      <ul>
+        <li>Query nền: SELECT, WHERE, ORDER BY, DISTINCT, aliases</li>
+        <li>Tổng hợp: GROUP BY, HAVING, aggregate functions, date bucket</li>
+        <li>JOIN đúng: inner, left, anti-join, tránh nhân dòng</li>
+        <li>Logic: CASE WHEN, CTE, subquery, window functions, cohort</li>
+        <li>Đi làm: schema, data dict, stored procedures, index, production safety</li>
+      </ul>
+    </div>
+    <div class="knowledge-card powerbi">
+      <div class="knowledge-card-icon" style="background:#FFFDE7;">📈</div>
+      <h3>Power BI</h3>
+      <ul>
+        <li>Power Query: làm sạch trước model, đặt tên query dễ hiểu</li>
+        <li>Data model: fact/dimension, star schema, date table</li>
+        <li>DAX: CALCULATE, FILTER, ALL, time intelligence, iterator</li>
+        <li>Visualization: KPI first, trend, comparison, drill-down</li>
+        <li>Service: publish, refresh, gateway, row-level security</li>
+      </ul>
+    </div>
+    <div class="knowledge-card python">
+      <div class="knowledge-card-icon" style="background:#E8F1FB;">🐍</div>
+      <h3>Python for Data</h3>
+      <ul>
+        <li>Python basics: variable, list, dict, loop, function</li>
+        <li>Pandas: read, clean, filter, groupby, merge, pivot, datetime</li>
+        <li>EDA: distribution, outlier, correlation, trend, segment, RFM</li>
+        <li>Visualization: matplotlib/seaborn, chart choice, annotation</li>
+        <li>Automation: batch clean, API, refresh dataset, generate report</li>
+      </ul>
+    </div>
+    <div class="knowledge-card storytelling">
+      <div class="knowledge-card-icon" style="background:#F5EEF8;">📖</div>
+      <h3>Storytelling with Data</h3>
+      <ul>
+        <li>Luôn bắt đầu từ audience: ai đọc, họ cần quyết định gì</li>
+        <li>Thông điệp trước biểu đồ: mỗi chart trả lời một câu hỏi rõ</li>
+        <li>Chọn chart theo mục đích: so sánh, xu hướng, cơ cấu</li>
+        <li>Giảm nhiễu: bỏ gridline thừa, màu không cần thiết</li>
+        <li>Kết luận: phát hiện → số liệu → nguyên nhân → đề xuất</li>
+      </ul>
+    </div>
+    <div class="knowledge-card workplace">
+      <div class="knowledge-card-icon" style="background:#E8F8ED;">💼</div>
+      <h3>Workplace & Senior Skills</h3>
+      <ul>
+        <li>Clarify requirement: metric definition, time range, filter, owner</li>
+        <li>Data quality: missing, duplicate, outlier, grain, join cardinality</li>
+        <li>Production DB safety: read-only, limit/sampling, hỏi quyền</li>
+        <li>Documentation: data dictionary, logic measure, changelog</li>
+        <li>Stakeholder: nói bằng business impact, không chỉ bằng tool</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- RESOURCES -->
+<div class="section-alt">
+<section class="section container" id="resources">
+  <div class="section-header">
+    <div class="section-eyebrow">Tài nguyên</div>
+    <h2 class="section-title">Nguồn học & <em>Link tham khảo</em></h2>
+    <p class="section-desc">Ưu tiên nguồn miễn phí hoàn toàn hoặc có phần học miễn phí. Kiểm tra lại trạng thái trước khi gửi cho học viên.</p>
+  </div>
+  <div class="resource-section-tabs">
+    <button class="resource-tab active" onclick="showTab('excel-res')">📊 Excel</button>
+    <button class="resource-tab" onclick="showTab('sheets-res')">🔢 Google Sheets</button>
+    <button class="resource-tab" onclick="showTab('sql-res')">🗄️ SQL</button>
+    <button class="resource-tab" onclick="showTab('pbi-res')">📈 Power BI</button>
+    <button class="resource-tab" onclick="showTab('python-res')">🐍 Python</button>
+    <button class="resource-tab" onclick="showTab('story-res')">📖 Storytelling</button>
+    <button class="resource-tab" onclick="showTab('data-res')">🗂 Datasets</button>
+    <button class="resource-tab" onclick="showTab('career-res')">🚀 Career</button>
+  </div>
+
+  <div id="excel-res" class="resource-panel active"><div class="resource-list">
+    <a href="https://support.microsoft.com/en-us/excel" target="_blank" class="resource-item"><span class="resource-badge badge-free">Miễn phí</span><div><div class="resource-name">Microsoft Excel Help & Learning</div><div class="resource-desc">Tài liệu chính thống về Excel, công thức, PivotTable, charts</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://exceljet.net/" target="_blank" class="resource-item"><span class="resource-badge badge-part">Một phần</span><div><div class="resource-name">ExcelJet</div><div class="resource-desc">Công thức Excel, ví dụ nhanh, shortcut, rất thực chiến</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://exceljet.net/formulas" target="_blank" class="resource-item"><span class="resource-badge badge-part">Một phần</span><div><div class="resource-name">ExcelJet Formulas</div><div class="resource-desc">Kho công thức theo bài toán: XLOOKUP, COUNTIFS, SUMIFS, FILTER</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://www.excel-easy.com/" target="_blank" class="resource-item"><span class="resource-badge badge-free">Miễn phí</span><div><div class="resource-name">Excel Easy</div><div class="resource-desc">Tutorial căn bản đến nâng cao, dễ dùng cho newbie</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://chandoo.org/wp/" target="_blank" class="resource-item"><span class="resource-badge badge-part">Một phần</span><div><div class="resource-name">Chandoo</div><div class="resource-desc">Excel, Power BI, dashboard, charting</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://www.youtube.com/@GaExcel" target="_blank" class="resource-item"><span class="resource-badge badge-free">Miễn phí</span><div><div class="resource-name">Gà Excel (YouTube)</div><div class="resource-desc">Kênh tiếng Việt về Excel</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://www.youtube.com/@LeilaGharani" target="_blank" class="resource-item"><span class="resource-badge badge-free">Miễn phí</span><div><div class="resource-name">Leila Gharani (YouTube)</div><div class="resource-desc">Excel, Power BI chuyên sâu</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://www.youtube.com/watch?v=pCJ15nGFgVg" target="_blank" class="resource-item"><span class="resource-badge badge-free">Miễn phí</span><div><div class="resource-name">Luke Barousse — Excel</div><div class="resource-desc">Excel cho Data Analyst</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://www.youtube.com/watch?v=lH7HfwUFnYA&list=PLUaB-1hjhk8Hyd5NiPQ9CND82vNodlFF5" target="_blank" class="resource-item"><span class="resource-badge badge-free">Miễn phí</span><div><div class="resource-name">Alex The Analyst — Excel</div><div class="resource-desc">Series Excel từ cơ bản đến ứng dụng thực tế</div></div><span class="resource-arrow">→</span></a>
+  </div></div>
+
+  <div id="sheets-res" class="resource-panel"><div class="resource-list">
+    <a href="https://support.google.com/a/users/answer/9282959?hl=en" target="_blank" class="resource-item"><span class="resource-badge badge-free">Miễn phí</span><div><div class="resource-name">Google Sheets Training & Help</div><div class="resource-desc">Quick start, cheat sheet, productivity guide chính thống</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://www.skills.google/course_templates/196" target="_blank" class="resource-item"><span class="resource-badge badge-free">Miễn phí</span><div><div class="resource-name">Google Sheets Course Template</div><div class="resource-desc">Khóa giới thiệu Google Sheets trên nền tảng Google Skills</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://www.benlcollins.com/" target="_blank" class="resource-item"><span class="resource-badge badge-part">Một phần</span><div><div class="resource-name">Ben Collins</div><div class="resource-desc">Google Sheets, Apps Script, dashboard, automation, API</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://skillshop.withgoogle.com/" target="_blank" class="resource-item"><span class="resource-badge badge-free">Miễn phí</span><div><div class="resource-name">Google Skillshop</div><div class="resource-desc">Khóa sản phẩm Google, Analytics, Ads, workplace tools</div></div><span class="resource-arrow">→</span></a>
+  </div></div>
+
+  <div id="sql-res" class="resource-panel"><div class="resource-list">
+    <a href="https://learn.microsoft.com/en-us/training/paths/get-started-querying-with-transact-sql/" target="_blank" class="resource-item"><span class="resource-badge badge-free">Miễn phí</span><div><div class="resource-name">Microsoft Learn — T-SQL</div><div class="resource-desc">Learning path chính thống: SELECT, JOIN, GROUP BY, subquery</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://sqlbolt.com/" target="_blank" class="resource-item"><span class="resource-badge badge-free">Miễn phí</span><div><div class="resource-name">SQLBolt</div><div class="resource-desc">Bài học SQL tương tác trong browser, cực hợp newbie</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://sqlzoo.net/" target="_blank" class="resource-item"><span class="resource-badge badge-free">Miễn phí</span><div><div class="resource-name">SQLZoo</div><div class="resource-desc">Bài luyện SQL step-by-step: SELECT, JOIN, aggregate</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://mode.com/sql-tutorial/" target="_blank" class="resource-item"><span class="resource-badge badge-free">Miễn phí</span><div><div class="resource-name">Mode SQL Tutorial</div><div class="resource-desc">SQL cho data analysis, query editor và dataset thực hành</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://www.hackerrank.com/domains/sql" target="_blank" class="resource-item"><span class="resource-badge badge-part">Một phần</span><div><div class="resource-name">HackerRank SQL</div><div class="resource-desc">Bài luyện SQL theo level, hợp luyện cú pháp và interview</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://datalemur.com/questions" target="_blank" class="resource-item"><span class="resource-badge badge-part">Một phần</span><div><div class="resource-name">DataLemur</div><div class="resource-desc">Câu hỏi SQL, Python, Statistics cho Data Interview</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://leetcode.com/studyplan/top-sql-50/" target="_blank" class="resource-item"><span class="resource-badge badge-part">Một phần</span><div><div class="resource-name">LeetCode SQL 50</div><div class="resource-desc">Study plan 50 câu SQL interview từ basic đến intermediate</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://www.8weeksqlchallenge.com/" target="_blank" class="resource-item"><span class="resource-badge badge-free">Miễn phí</span><div><div class="resource-name">8 Week SQL Challenge</div><div class="resource-desc">Case study SQL theo bối cảnh kinh doanh của Danny Ma</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://www.youtube.com/@TITVvn" target="_blank" class="resource-item"><span class="resource-badge badge-free">Miễn phí</span><div><div class="resource-name">TITV (YouTube)</div><div class="resource-desc">SQL Server tiếng Việt</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://www.youtube.com/watch?v=SSKVgrwhzus&t=7s" target="_blank" class="resource-item"><span class="resource-badge badge-free">Miễn phí</span><div><div class="resource-name">Data with Baraa</div><div class="resource-desc">SQL project thực chiến</div></div><span class="resource-arrow">→</span></a>
+  </div></div>
+
+  <div id="pbi-res" class="resource-panel"><div class="resource-list">
+    <a href="https://learn.microsoft.com/en-us/training/powerplatform/power-bi" target="_blank" class="resource-item"><span class="resource-badge badge-free">Miễn phí</span><div><div class="resource-name">Microsoft Learn Power BI</div><div class="resource-desc">Learning paths chính thống cho modeling, visualization, report</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://learn.microsoft.com/en-us/power-bi/create-reports/sample-datasets" target="_blank" class="resource-item"><span class="resource-badge badge-free">Miễn phí</span><div><div class="resource-name">Power BI Sample Datasets</div><div class="resource-desc">Sample .pbix, .xlsx, SQL database để học thực hành</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://learn.microsoft.com/en-us/dax/" target="_blank" class="resource-item"><span class="resource-badge badge-free">Miễn phí</span><div><div class="resource-name">Microsoft DAX Reference</div><div class="resource-desc">DAX functions, operators, syntax, examples</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://dax.guide/" target="_blank" class="resource-item"><span class="resource-badge badge-free">Miễn phí</span><div><div class="resource-name">DAX Guide</div><div class="resource-desc">Tra cứu hàm DAX, ví dụ, remarks, related functions</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://www.sqlbi.com/guides/dax/" target="_blank" class="resource-item"><span class="resource-badge badge-part">Một phần</span><div><div class="resource-name">SQLBI — How to learn DAX</div><div class="resource-desc">Roadmap học DAX từ nền tảng đến nâng cao</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://www.sqlbi.com/p/introducing-dax-video-course/" target="_blank" class="resource-item"><span class="resource-badge badge-free">Miễn phí</span><div><div class="resource-name">SQLBI — Introducing DAX Video</div><div class="resource-desc">Khóa video nhập môn DAX</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://www.daxpatterns.com/" target="_blank" class="resource-item"><span class="resource-badge badge-part">Một phần</span><div><div class="resource-name">DAX Patterns</div><div class="resource-desc">Pattern DAX cho bài toán business: ranking, time intelligence</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://www.daxformatter.com/" target="_blank" class="resource-item"><span class="resource-badge badge-free">Miễn phí</span><div><div class="resource-name">DAX Formatter</div><div class="resource-desc">Format DAX sạch, dễ đọc, chuẩn style SQLBI</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://www.youtube.com/guyinacube" target="_blank" class="resource-item"><span class="resource-badge badge-free">Miễn phí</span><div><div class="resource-name">Guy in a Cube (YouTube)</div><div class="resource-desc">Power BI/Fabric: tips, service, performance, refresh</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://www.youtube.com/watch?v=FwjaHCVNBWA&t=2s" target="_blank" class="resource-item"><span class="resource-badge badge-free">Miễn phí</span><div><div class="resource-name">Luke Barousse — Power BI</div><div class="resource-desc">Power BI cho Data Analyst</div></div><span class="resource-arrow">→</span></a>
+  </div></div>
+
+  <div id="python-res" class="resource-panel"><div class="resource-list">
+    <a href="https://www.kaggle.com/learn" target="_blank" class="resource-item"><span class="resource-badge badge-free">Miễn phí</span><div><div class="resource-name">Kaggle Learn</div><div class="resource-desc">Micro-course Python, Pandas, Data Visualization, SQL, ML</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://www.kaggle.com/learn/python" target="_blank" class="resource-item"><span class="resource-badge badge-free">Miễn phí</span><div><div class="resource-name">Kaggle Learn — Python</div><div class="resource-desc">Python căn bản cho data</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://www.kaggle.com/learn/pandas" target="_blank" class="resource-item"><span class="resource-badge badge-free">Miễn phí</span><div><div class="resource-name">Kaggle Learn — Pandas</div><div class="resource-desc">Pandas hands-on challenges</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://www.freecodecamp.org/learn/data-analysis-with-python" target="_blank" class="resource-item"><span class="resource-badge badge-free">Miễn phí</span><div><div class="resource-name">freeCodeCamp — Data with Python</div><div class="resource-desc">Certification với NumPy, Pandas, Matplotlib và projects</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://www.py4e.com/" target="_blank" class="resource-item"><span class="resource-badge badge-free">Miễn phí</span><div><div class="resource-name">Python for Everybody</div><div class="resource-desc">Lecture, book, assignments học Python từ đầu</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://pandas.pydata.org/docs/user_guide/index.html" target="_blank" class="resource-item"><span class="resource-badge badge-free">Miễn phí</span><div><div class="resource-name">Pandas User Guide</div><div class="resource-desc">Tài liệu Pandas chính thống</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://www.youtube.com/@coreyms" target="_blank" class="resource-item"><span class="resource-badge badge-free">Miễn phí</span><div><div class="resource-name">Corey Schafer (YouTube)</div><div class="resource-desc">Python, Pandas, Django</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://www.youtube.com/@KeithGalli" target="_blank" class="resource-item"><span class="resource-badge badge-free">Miễn phí</span><div><div class="resource-name">Keith Galli (YouTube)</div><div class="resource-desc">Python cho Data</div></div><span class="resource-arrow">→</span></a>
+  </div></div>
+
+  <div id="story-res" class="resource-panel"><div class="resource-list">
+    <a href="https://www.storytellingwithdata.com/" target="_blank" class="resource-item"><span class="resource-badge badge-part">Một phần</span><div><div class="resource-name">Storytelling with Data</div><div class="resource-desc">Blog, makeover, video, framework kể chuyện bằng dữ liệu</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://www.storytellingwithdata.com/blog" target="_blank" class="resource-item"><span class="resource-badge badge-free">Miễn phí</span><div><div class="resource-name">SWD Blog</div><div class="resource-desc">Bài viết về slide, chart, annotation, narrative</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://www.data-to-viz.com/" target="_blank" class="resource-item"><span class="resource-badge badge-free">Miễn phí</span><div><div class="resource-name">From Data to Viz</div><div class="resource-desc">Chọn chart đúng theo loại dữ liệu và mục tiêu phân tích</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://datavizcatalogue.com/" target="_blank" class="resource-item"><span class="resource-badge badge-free">Miễn phí</span><div><div class="resource-name">Data Visualisation Catalogue</div><div class="resource-desc">Thư viện chart types và cách dùng</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://www.openintro.org/book/os/" target="_blank" class="resource-item"><span class="resource-badge badge-free">Miễn phí</span><div><div class="resource-name">OpenIntro Statistics</div><div class="resource-desc">Sách thống kê nền tảng, bài tập, dataset — Miễn phí PDF</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://www.khanacademy.org/math/statistics-probability" target="_blank" class="resource-item"><span class="resource-badge badge-free">Miễn phí</span><div><div class="resource-name">Khan Academy Statistics</div><div class="resource-desc">Nền tảng xác suất, thống kê, distribution, inference</div></div><span class="resource-arrow">→</span></a>
+  </div></div>
+
+  <div id="data-res" class="resource-panel"><div class="resource-list">
+    <a href="https://mavenanalytics.io/data-playground" target="_blank" class="resource-item"><span class="resource-badge badge-acct">Cần tài khoản</span><div><div class="resource-name">Maven Analytics Data Playground</div><div class="resource-desc">Dataset thực hành cho Excel, Power BI, Tableau, SQL</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://www.kaggle.com/datasets" target="_blank" class="resource-item"><span class="resource-badge badge-free">Miễn phí</span><div><div class="resource-name">Kaggle Datasets</div><div class="resource-desc">Kho dataset khổng lồ cho EDA, BI, ML</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://data.gov/" target="_blank" class="resource-item"><span class="resource-badge badge-free">Miễn phí</span><div><div class="resource-name">Data.gov</div><div class="resource-desc">Open data của chính phủ Mỹ</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://ourworldindata.org/" target="_blank" class="resource-item"><span class="resource-badge badge-free">Miễn phí</span><div><div class="resource-name">Our World in Data</div><div class="resource-desc">Dữ liệu thế giới về y tế, kinh tế, môi trường, xã hội</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://data.worldbank.org/" target="_blank" class="resource-item"><span class="resource-badge badge-free">Miễn phí</span><div><div class="resource-name">World Bank Open Data</div><div class="resource-desc">Dữ liệu phát triển toàn cầu</div></div><span class="resource-arrow">→</span></a>
+  </div></div>
+
+  <div id="career-res" class="resource-panel"><div class="resource-list">
+    <a href="https://skills.github.com/" target="_blank" class="resource-item"><span class="resource-badge badge-free">Miễn phí</span><div><div class="resource-name">GitHub Skills</div><div class="resource-desc">Khóa GitHub tương tác: pull request, GitHub Pages, open source</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://docs.github.com/en/get-started/start-your-journey/git-and-github-learning-resources" target="_blank" class="resource-item"><span class="resource-badge badge-free">Miễn phí</span><div><div class="resource-name">GitHub Learning Resources</div><div class="resource-desc">Tài liệu học Git/GitHub chính thống</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://www.youtube.com/@AlexTheAnalyst" target="_blank" class="resource-item"><span class="resource-badge badge-free">Miễn phí</span><div><div class="resource-name">Alex The Analyst YouTube</div><div class="resource-desc">Bootcamp DA: SQL, Excel, Python, Power BI, GitHub</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://www.classcentral.com/subject/data-analysis" target="_blank" class="resource-item"><span class="resource-badge badge-part">Một phần</span><div><div class="resource-name">Class Central — Data Analysis</div><div class="resource-desc">Aggregator tìm khóa miễn phí từ nhiều nền tảng</div></div><span class="resource-arrow">→</span></a>
+    <a href="https://www.udemy.com/topic/data-analysis/free/" target="_blank" class="resource-item"><span class="resource-badge badge-part">Thay đổi</span><div><div class="resource-name">Udemy Free Data Analysis</div><div class="resource-desc">Free courses chủ đề data analysis — kiểm tra trạng thái trước</div></div><span class="resource-arrow">→</span></a>
+  </div></div>
+</section>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- CHALLENGE -->
+<section class="section container" id="challenge">
+  <div class="section-header">
+    <div class="section-eyebrow">Luyện tập</div>
+    <h2 class="section-title">Challenge, Case Study & <em>SQL Mock Interview</em></h2>
+    <p class="section-desc">Lộ trình luyện SQL 30 ngày và bộ câu hỏi phỏng vấn từ Easy đến Hard</p>
+  </div>
+
+  <h3 style="font-size:18px;font-weight:800;color:var(--ink);margin-bottom:20px;">📅 Lộ trình luyện SQL 30 ngày</h3>
+  <div class="sql-schedule">
+    <div class="week-card"><div class="week-label">Tuần 1</div><h4>SELECT, WHERE, ORDER BY, aggregate cơ bản</h4><p>Viết được query đọc dữ liệu và tổng hợp đơn giản</p><p class="week-source">SQLBolt · SQLZoo · Microsoft Learn T-SQL</p></div>
+    <div class="week-card"><div class="week-label">Tuần 2</div><h4>JOIN, GROUP BY, CASE WHEN, date functions</h4><p>Trả lời câu hỏi doanh thu, khách hàng, sản phẩm, kênh</p><p class="week-source">Mode SQL Tutorial · HackerRank SQL</p></div>
+    <div class="week-card"><div class="week-label">Tuần 3</div><h4>CTE, subquery, window functions</h4><p>Viết query nhiều lớp logic, ranking, running total</p><p class="week-source">LeetCode SQL 50 · DataLemur</p></div>
+    <div class="week-card"><div class="week-label">Tuần 4</div><h4>Case study business hoàn chỉnh</h4><p>Tạo file SQL hoàn chỉnh và insight memo</p><p class="week-source">8 Week SQL Challenge</p></div>
+  </div>
+
+  <h3 style="font-size:18px;font-weight:800;color:var(--ink);margin:40px 0 20px;">🎯 Bộ câu hỏi SQL Mock Interview</h3>
+  <div class="question-table-wrapper">
+    <table class="question-table">
+      <thead><tr><th>Level</th><th>Câu hỏi</th></tr></thead>
+      <tbody>
+        <tr><td><span class="level-easy">Easy</span></td><td>Lấy 10 đơn hàng mới nhất từ bảng orders.</td></tr>
+        <tr><td><span class="level-easy">Easy</span></td><td>Đếm số đơn theo từng trạng thái completed/cancelled/returned.</td></tr>
+        <tr><td><span class="level-easy">Easy</span></td><td>Tính doanh thu theo tháng, chỉ tính đơn completed.</td></tr>
+        <tr><td><span class="level-easy">Easy</span></td><td>Tìm top 10 sản phẩm có số lượng bán cao nhất.</td></tr>
+        <tr><td><span class="level-easy">Easy</span></td><td>Tính AOV theo từng kênh bán.</td></tr>
+        <tr><td><span class="level-easy">Easy</span></td><td>Tìm khách hàng chưa từng đặt đơn completed.</td></tr>
+        <tr><td><span class="level-easy">Easy</span></td><td>Tính số khách mới theo tháng signup_date.</td></tr>
+        <tr><td><span class="level-medium">Medium</span></td><td>So sánh revenue tháng hiện tại với tháng trước bằng CTE.</td></tr>
+        <tr><td><span class="level-medium">Medium</span></td><td>Tính tỷ lệ hủy/hoàn đơn theo từng kênh bán.</td></tr>
+        <tr><td><span class="level-medium">Medium</span></td><td>Phân loại khách mới/cũ dựa trên first_order_date.</td></tr>
+        <tr><td><span class="level-medium">Medium</span></td><td>Tìm category có doanh thu giảm mạnh nhất MoM.</td></tr>
+        <tr><td><span class="level-medium">Medium</span></td><td>Tính contribution % của từng category trong tổng revenue.</td></tr>
+        <tr><td><span class="level-medium">Medium</span></td><td>Tìm sản phẩm có doanh thu cao nhưng margin thấp.</td></tr>
+        <tr><td><span class="level-medium">Medium</span></td><td>Tạo bảng cohort theo tháng mua đầu tiên và tháng quay lại.</td></tr>
+        <tr><td><span class="level-medium">Medium</span></td><td>Tính running revenue theo ngày bằng window function.</td></tr>
+        <tr><td><span class="level-medium">Medium</span></td><td>Rank sản phẩm trong từng category theo revenue.</td></tr>
+        <tr><td><span class="level-medium">Medium</span></td><td>Tìm đơn hàng có discount_amount bất thường so với trung bình category.</td></tr>
+        <tr><td><span class="level-medium">Medium</span></td><td>Tính số ngày giữa signup_date và first_order_date.</td></tr>
+        <tr><td><span class="level-hard">Hard</span></td><td>Viết query phân tích funnel: view → add_to_cart → checkout → purchase.</td></tr>
+        <tr><td><span class="level-hard">Hard</span></td><td>Tạo RFM score bằng NTILE hoặc percentile.</td></tr>
+        <tr><td><span class="level-hard">Hard</span></td><td>Tính retention matrix M0–M6 từ activity_logs.</td></tr>
+        <tr><td><span class="level-hard">Hard</span></td><td>Phát hiện khách hàng có giao dịch bất thường trong 7 ngày gần nhất.</td></tr>
+        <tr><td><span class="level-hard">Hard</span></td><td>Tối ưu query bị nhân dòng sau khi join order_items với orders và payments.</td></tr>
+        <tr><td><span class="level-hard">Hard</span></td><td>Tính conversion rate theo campaign với attribution window 7 ngày.</td></tr>
+        <tr><td><span class="level-hard">Hard</span></td><td>Dùng window function tìm lần mua liên tiếp và khoảng cách giữa các lần mua.</td></tr>
+        <tr><td><span class="level-hard">Hard</span></td><td>Viết query tạo customer 360 table cho dashboard.</td></tr>
+        <tr><td><span class="level-mock">Mock</span></td><td>Sếp hỏi doanh thu giảm 18%. Bạn sẽ query theo thứ tự nào?</td></tr>
+        <tr><td><span class="level-mock">Mock</span></td><td>Nếu bảng source không có định nghĩa revenue rõ ràng, bạn hỏi stakeholder gì?</td></tr>
+        <tr><td><span class="level-mock">Mock</span></td><td>Kết quả Power BI lệch SQL source 3%. Bạn kiểm tra những bước nào?</td></tr>
+        <tr><td><span class="level-mock">Mock</span></td><td>Bạn có 1 bảng 10 triệu dòng, query chậm. Bạn xử lý thế nào trước khi tối ưu sâu?</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="font-size:18px;font-weight:800;color:var(--ink);margin:40px 0 20px;">🎙 Mock Interview Script theo vòng</h3>
+  <div class="mock-grid">
+    <div class="mock-card"><h4>Round 1 — SQL Fundamentals</h4><ul>
+      <li>Explain INNER JOIN vs LEFT JOIN.</li>
+      <li>What can cause duplicated rows after JOIN?</li>
+      <li>How do you calculate revenue when orders have status?</li>
+      <li>Write a query for monthly active users.</li>
+    </ul></div>
+    <div class="mock-card"><h4>Round 2 — Business Case</h4><ul>
+      <li>Revenue dropped this month. What dimensions do you check first?</li>
+      <li>How would you separate volume effect and price effect?</li>
+      <li>How would you decide whether a campaign is successful?</li>
+      <li>What is a bad insight? Give an example.</li>
+    </ul></div>
+    <div class="mock-card"><h4>Round 3 — Dashboard & BI</h4><ul>
+      <li>What makes a dashboard useful?</li>
+      <li>When should you use Power Query vs DAX?</li>
+      <li>How do you validate a Power BI number?</li>
+      <li>What is a star schema and why does it matter?</li>
+    </ul></div>
+    <div class="mock-card"><h4>Round 4 — Python & EDA</h4><ul>
+      <li>How do you handle missing values?</li>
+      <li>How do you detect outliers?</li>
+      <li>When would you use Python instead of Excel?</li>
+      <li>How do you make your notebook readable for reviewers?</li>
+    </ul></div>
+    <div class="mock-card"><h4>Round 5 — Senior Behavior</h4><ul>
+      <li>Tell me about a time data was incomplete.</li>
+      <li>How do you push back when stakeholder asks for a vague report?</li>
+      <li>How do you document metric logic?</li>
+      <li>How do you prioritize multiple data requests?</li>
+    </ul></div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- PROJECTS -->
+<div class="section-alt">
+<section class="section container" id="projects">
+  <div class="section-header">
+    <div class="section-eyebrow">Project Vault</div>
+    <h2 class="section-title"><em>20 Projects</em> Dứa có thể dùng nhiều năm</h2>
+    <p class="section-desc">Mỗi project gồm bối cảnh, dữ liệu, công cụ, bước làm và output — không chỉ "làm dashboard".</p>
+  </div>
+  <div class="projects-grid">
+
+    <div class="project-card">
+      <div class="project-num">01</div>
+      <h3>E-commerce Revenue Drop Diagnosis</h3>
+      <p class="project-context">Shop online có Facebook, Shopee, TikTok, Website; doanh thu tháng gần nhất giảm chưa rõ nguyên nhân.</p>
+      <div class="project-meta"><span class="project-tool">SQL Server</span><span class="project-tool">Power BI</span></div>
+      <ul class="project-steps">
+        <li>Khám phá dữ liệu và kiểm tra grain</li>
+        <li>Tính revenue thực nhận từ đơn completed</li>
+        <li>So sánh MoM theo tháng, kênh, category, khách mới/cũ</li>
+        <li>Phân tích cancelled/returned và doanh thu mất</li>
+        <li>Viết insight: phát hiện → bằng chứng → nguyên nhân → đề xuất</li>
+      </ul>
+      <div class="project-output">File SQL, revenue breakdown, 1–2 trang insight</div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">02</div>
+      <h3>Social Media Marketing Performance</h3>
+      <p class="project-context">Công ty IT chạy content trên TikTok, Instagram, LinkedIn, X.com; cần biết nền tảng, format, thời gian nào hiệu quả.</p>
+      <div class="project-meta"><span class="project-tool">SQL</span><span class="project-tool">Power BI</span></div>
+      <ul class="project-steps">
+        <li>Làm sạch metadata và chuẩn hóa platform/region</li>
+        <li>Tính engagement rate, CTR, view rate</li>
+        <li>So sánh organic vs promoted</li>
+        <li>Tìm top hashtag, best posting time, best content category</li>
+        <li>Thiết kế dashboard chiến lược nội dung</li>
+      </ul>
+      <div class="project-output">Power BI dashboard + recommendation cho content plan</div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">03</div>
+      <h3>Content Operations Dashboard</h3>
+      <p class="project-context">Theo dõi bài viết, deadline, trạng thái, reviewer, reach, like, share, KPI của team content.</p>
+      <div class="project-meta"><span class="project-tool">Google Sheets</span><span class="project-tool">Looker Studio</span></div>
+      <ul class="project-steps">
+        <li>Chuẩn hóa dropdown và status</li>
+        <li>Tạo KPI: tổng bài, đã đăng, chờ review, quá hạn</li>
+        <li>Dashboard theo tuyến nội dung, kênh, admin</li>
+        <li>Alert quá hạn bằng conditional formatting/App Script</li>
+        <li>Viết SOP cập nhật dữ liệu hằng ngày</li>
+      </ul>
+      <div class="project-output">Dashboard vận hành + checklist cập nhật dữ liệu</div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">04</div>
+      <h3>AI Career Quiz Lead Capture</h3>
+      <p class="project-context">Quiz định hướng nghề data/AI thu lead và phân nhóm nhu cầu học.</p>
+      <div class="project-meta"><span class="project-tool">Google Sheets</span><span class="project-tool">HTML/JS</span><span class="project-tool">Looker Studio</span></div>
+      <ul class="project-steps">
+        <li>Thiết kế câu hỏi mapping persona</li>
+        <li>Lưu response vào Google Sheets</li>
+        <li>Tính distribution theo persona và công cụ muốn học</li>
+        <li>Tạo dashboard lead quality</li>
+        <li>Đề xuất CTA/course path theo nhóm</li>
+      </ul>
+      <div class="project-output">Lead dashboard + segmentation recommendation</div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">05</div>
+      <h3>GenZ Education Learning Funnel</h3>
+      <p class="project-context">Phân tích hành trình học của GenZ: đăng ký, học bài, hoàn thành, churn, feedback.</p>
+      <div class="project-meta"><span class="project-tool">SQL</span><span class="project-tool">Power BI</span></div>
+      <ul class="project-steps">
+        <li>Định nghĩa funnel: signup → attend → complete → repurchase</li>
+        <li>Tính completion rate theo khóa/kênh</li>
+        <li>Phân tích cohort học viên theo tháng đăng ký</li>
+        <li>Tìm nhóm có nguy cơ churn</li>
+        <li>Đề xuất can thiệp học tập</li>
+      </ul>
+      <div class="project-output">Funnel dashboard + cohort table + action plan</div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">06</div>
+      <h3>Coffee Shop Sales Dashboard</h3>
+      <p class="project-context">Chuỗi coffee shop muốn hiểu doanh thu theo chi nhánh, giờ, sản phẩm và thời tiết.</p>
+      <div class="project-meta"><span class="project-tool">Excel</span><span class="project-tool">Power BI</span></div>
+      <ul class="project-steps">
+        <li>Clean date/time và product category</li>
+        <li>Tính revenue, orders, AOV, quantity</li>
+        <li>Heatmap theo giờ/ngày</li>
+        <li>Top product và cross-sell insight</li>
+        <li>Dashboard cho store manager</li>
+      </ul>
+      <div class="project-output">Dashboard 1 trang + 5 insight vận hành</div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">07</div>
+      <h3>Customer RFM Segmentation</h3>
+      <p class="project-context">Phân nhóm khách hàng để remarketing và retention.</p>
+      <div class="project-meta"><span class="project-tool">SQL</span><span class="project-tool">Excel/Power BI</span><span class="project-tool">Python</span></div>
+      <ul class="project-steps">
+        <li>Tính recency, frequency, monetary</li>
+        <li>Chấm điểm R/F/M theo percentile</li>
+        <li>Gắn segment: champion, loyal, at risk, lost</li>
+        <li>So sánh doanh thu và hành vi theo segment</li>
+        <li>Đề xuất campaign cho từng nhóm</li>
+      </ul>
+      <div class="project-output">RFM table + dashboard segment + campaign recommendation</div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">08</div>
+      <h3>Cohort Retention Analysis</h3>
+      <p class="project-context">Sản phẩm subscription muốn biết người dùng còn quay lại sau tháng đầu không.</p>
+      <div class="project-meta"><span class="project-tool">SQL</span><span class="project-tool">Power BI/Python</span></div>
+      <ul class="project-steps">
+        <li>Xác định cohort month theo first purchase/signup</li>
+        <li>Tạo retention matrix M0–M6</li>
+        <li>Phân tích retention theo acquisition channel</li>
+        <li>Tìm cohort bất thường</li>
+        <li>Viết insight về retention và churn</li>
+      </ul>
+      <div class="project-output">Retention matrix + churn insight memo</div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">09</div>
+      <h3>Marketing Campaign ROI</h3>
+      <p class="project-context">Team marketing cần biết chiến dịch nào tạo doanh thu tốt so với ngân sách.</p>
+      <div class="project-meta"><span class="project-tool">SQL</span><span class="project-tool">Power BI</span></div>
+      <ul class="project-steps">
+        <li>Chuẩn hóa cost và attribution window</li>
+        <li>Tính CAC, ROAS, conversion rate</li>
+        <li>So sánh paid/social/search/email</li>
+        <li>Phân tích lag từ lead tới purchase</li>
+        <li>Đề xuất cắt/tăng ngân sách</li>
+      </ul>
+      <div class="project-output">Campaign performance dashboard + budget recommendation</div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">10</div>
+      <h3>Product Funnel Analysis</h3>
+      <p class="project-context">Sản phẩm số muốn tìm bước rơi rụng trong funnel.</p>
+      <div class="project-meta"><span class="project-tool">SQL</span><span class="project-tool">Python/Power BI</span></div>
+      <ul class="project-steps">
+        <li>Định nghĩa event và funnel order</li>
+        <li>Tính user count từng bước</li>
+        <li>Phân tích drop-off theo device/channel</li>
+        <li>So sánh cohort tuần</li>
+        <li>Đề xuất experiment cải thiện conversion</li>
+      </ul>
+      <div class="project-output">Funnel report + prioritized experiment backlog</div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">11</div>
+      <h3>Inventory & Stockout Analysis</h3>
+      <p class="project-context">Kho hàng hay thiếu hàng ở SKU bán chạy, gây mất doanh thu.</p>
+      <div class="project-meta"><span class="project-tool">SQL</span><span class="project-tool">Power BI</span></div>
+      <ul class="project-steps">
+        <li>Tính days of stock, stockout rate</li>
+        <li>Ghép sales velocity theo SKU</li>
+        <li>Phân loại ABC/Pareto</li>
+        <li>Tìm SKU có nguy cơ stockout</li>
+        <li>Đề xuất reorder policy</li>
+      </ul>
+      <div class="project-output">Inventory dashboard + reorder list</div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">12</div>
+      <h3>Customer Support SLA Dashboard</h3>
+      <p class="project-context">Team CS cần theo dõi ticket, SLA, backlog và nguyên nhân xử lý chậm.</p>
+      <div class="project-meta"><span class="project-tool">SQL</span><span class="project-tool">Power BI</span></div>
+      <ul class="project-steps">
+        <li>Tính first response time, resolution time</li>
+        <li>Đánh dấu SLA breach</li>
+        <li>Phân tích backlog theo category/agent</li>
+        <li>So sánh CSAT theo thời gian xử lý</li>
+        <li>Đề xuất phân bổ agent</li>
+      </ul>
+      <div class="project-output">SLA dashboard + weekly ops summary</div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">13</div>
+      <h3>Financial Variance Analysis</h3>
+      <p class="project-context">Ban quản lý muốn biết actual vs budget lệch do volume, price hay mix.</p>
+      <div class="project-meta"><span class="project-tool">Excel</span><span class="project-tool">Power BI</span></div>
+      <ul class="project-steps">
+        <li>Chuẩn hóa budget vs actual grain</li>
+        <li>Tính variance amount và variance %</li>
+        <li>Waterfall chart theo category</li>
+        <li>Drill-down theo department/product</li>
+        <li>Viết executive summary</li>
+      </ul>
+      <div class="project-output">Variance dashboard + finance insight note</div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">14</div>
+      <h3>Gold Price Monitoring Pipeline</h3>
+      <p class="project-context">Theo dõi giá vàng, lưu dữ liệu định kỳ và hiển thị trend.</p>
+      <div class="project-meta"><span class="project-tool">Python</span><span class="project-tool">SQL/Supabase</span><span class="project-tool">GitHub Actions</span></div>
+      <ul class="project-steps">
+        <li>Fetch dữ liệu JSON/API</li>
+        <li>Lưu raw và transformed table</li>
+        <li>Dùng dbt/SQL/Python để clean</li>
+        <li>Schedule bằng GitHub Actions</li>
+        <li>Dashboard theo dõi trend và biến động</li>
+      </ul>
+      <div class="project-output">Mini pipeline + README + dashboard</div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">15</div>
+      <h3>SEO Content Performance Dashboard</h3>
+      <p class="project-context">Website học data muốn biết cluster nào kéo traffic/lead tốt.</p>
+      <div class="project-meta"><span class="project-tool">Google Sheets</span><span class="project-tool">GA4</span><span class="project-tool">Looker Studio</span></div>
+      <ul class="project-steps">
+        <li>Import/export Search Console và GA4</li>
+        <li>Map keyword → cluster → funnel stage</li>
+        <li>Tính CTR, ranking movement, conversion</li>
+        <li>Ưu tiên bài cần update theo impact</li>
+        <li>Đề xuất content calendar</li>
+      </ul>
+      <div class="project-output">SEO dashboard + content priority list</div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">16</div>
+      <h3>HR Attrition Dashboard</h3>
+      <p class="project-context">Công ty muốn biết nhóm nhân sự nào có nguy cơ nghỉ việc cao.</p>
+      <div class="project-meta"><span class="project-tool">Excel</span><span class="project-tool">Power BI</span><span class="project-tool">Python</span></div>
+      <ul class="project-steps">
+        <li>Clean employee profile</li>
+        <li>Tính attrition rate theo department/tenure</li>
+        <li>Phân tích salary band, overtime, performance</li>
+        <li>Tìm outlier và caveat dữ liệu</li>
+        <li>Đề xuất action cho HR</li>
+      </ul>
+      <div class="project-output">HR dashboard + risk segment memo</div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">17</div>
+      <h3>A/B Test Landing Page</h3>
+      <p class="project-context">Team growth test 2 phiên bản landing page; cần kết luận nên chọn bản nào.</p>
+      <div class="project-meta"><span class="project-tool">Excel/Python</span><span class="project-tool">SQL</span></div>
+      <ul class="project-steps">
+        <li>Kiểm tra sample size và randomization</li>
+        <li>Tính conversion rate và uplift</li>
+        <li>Test significance đơn giản</li>
+        <li>Phân tích guardrail metrics</li>
+        <li>Viết decision memo</li>
+      </ul>
+      <div class="project-output">A/B testing notebook/report + recommendation</div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">18</div>
+      <h3>Banking Customer Transaction Analysis</h3>
+      <p class="project-context">Ngân hàng muốn hiểu hành vi giao dịch và nhóm khách có giá trị cao.</p>
+      <div class="project-meta"><span class="project-tool">SQL</span><span class="project-tool">Python</span><span class="project-tool">Power BI</span></div>
+      <ul class="project-steps">
+        <li>Tạo customer 360 table</li>
+        <li>Phân tích transaction frequency/value</li>
+        <li>Segment theo product holding và activity</li>
+        <li>Tìm anomaly/case cần kiểm tra</li>
+        <li>Dashboard KPI ngân hàng</li>
+      </ul>
+      <div class="project-output">Customer analytics dashboard + segment insight</div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">19</div>
+      <h3>Course Sales & Learning Dashboard</h3>
+      <p class="project-context">Trung tâm đào tạo muốn biết khóa học nào bán tốt và học viên có học hết không.</p>
+      <div class="project-meta"><span class="project-tool">SQL</span><span class="project-tool">Power BI</span></div>
+      <ul class="project-steps">
+        <li>Funnel từ lead → payment → attendance → completion</li>
+        <li>Tính attendance rate và assignment completion</li>
+        <li>So sánh theo khóa, mentor, channel</li>
+        <li>Tìm khóa có doanh thu tốt nhưng completion thấp</li>
+        <li>Đề xuất cải thiện retention học viên</li>
+      </ul>
+      <div class="project-output">EdTech ops dashboard + action memo</div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">20</div>
+      <h3>Senior Dashboard QA & Data Dictionary</h3>
+      <p class="project-context">Không xây dashboard mới; nhiệm vụ là audit dashboard cũ và chuẩn hóa logic đo lường.</p>
+      <div class="project-meta"><span class="project-tool">SQL</span><span class="project-tool">Power BI</span><span class="project-tool">Git</span></div>
+      <ul class="project-steps">
+        <li>Inventory toàn bộ page/visual/measure</li>
+        <li>Kiểm tra metric definition với stakeholder</li>
+        <li>Đối chiếu số Power BI với SQL source</li>
+        <li>Ghi data dictionary và known caveats</li>
+        <li>Đề xuất refactor model/measure</li>
+      </ul>
+      <div class="project-output">Audit report + data dictionary + refactor backlog</div>
+    </div>
+
+  </div>
+</section>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- CHECKLIST -->
+<section class="section container" id="checklist">
+  <div class="section-header">
+    <div class="section-eyebrow">Đi làm thật</div>
+    <h2 class="section-title">Checklist <em>Data Analyst</em> thực chiến</h2>
+    <p class="section-desc">Những điều cần làm trong từng tình huống công việc thực tế</p>
+  </div>
+  <div class="checklist-grid">
+    <div class="checklist-card">
+      <h3>🗣 Khi nhận request từ stakeholder</h3>
+      <div class="checklist-item"><div class="checklist-box"></div>Câu hỏi kinh doanh là gì? Người xem sẽ quyết định gì?</div>
+      <div class="checklist-item"><div class="checklist-box"></div>Metric cần tính là gì? Công thức, filter, time range, source?</div>
+      <div class="checklist-item"><div class="checklist-box"></div>Cần so sánh với mốc nào: MoM, YoY, target, budget?</div>
+      <div class="checklist-item"><div class="checklist-box"></div>Dữ liệu nằm ở đâu? Owner là ai? Có data dictionary không?</div>
+      <div class="checklist-item"><div class="checklist-box"></div>Output mong muốn: query, bảng số, dashboard, slide hay recommendation?</div>
+      <div class="checklist-item"><div class="checklist-box"></div>Deadline và mức độ chính xác cần thiết là gì?</div>
+    </div>
+    <div class="checklist-card">
+      <h3>🖥 Khi làm với production database</h3>
+      <div class="checklist-item"><div class="checklist-box"></div>Ưu tiên read-only; không UPDATE/DELETE khi chưa được giao quyền.</div>
+      <div class="checklist-item"><div class="checklist-box"></div>Luôn SELECT TOP/LIMIT trước để hiểu dữ liệu.</div>
+      <div class="checklist-item"><div class="checklist-box"></div>Kiểm tra grain của bảng trước khi JOIN.</div>
+      <div class="checklist-item"><div class="checklist-box"></div>Không chạy query nặng giờ cao điểm nếu chưa biết impact.</div>
+      <div class="checklist-item"><div class="checklist-box"></div>Không export dữ liệu nhạy cảm ra file cá nhân.</div>
+      <div class="checklist-item"><div class="checklist-box"></div>Lưu query version và ghi chú ngày chạy, source, filter.</div>
+    </div>
+    <div class="checklist-card">
+      <h3>📊 Khi validate dashboard</h3>
+      <div class="checklist-item"><div class="checklist-box"></div>KPI chính phải đối chiếu được bằng SQL hoặc source report.</div>
+      <div class="checklist-item"><div class="checklist-box"></div>Kiểm tra filter/slicer có làm thay đổi số đúng kỳ vọng không.</div>
+      <div class="checklist-item"><div class="checklist-box"></div>Kiểm tra model có gây double counting không.</div>
+      <div class="checklist-item"><div class="checklist-box"></div>Kiểm tra date table, active relationship, direction filter.</div>
+      <div class="checklist-item"><div class="checklist-box"></div>Kiểm tra refresh date và dữ liệu mới nhất.</div>
+      <div class="checklist-item"><div class="checklist-box"></div>Viết known caveats: số nào chưa chắc, nguồn nào thiếu.</div>
+    </div>
+    <div class="checklist-card">
+      <h3>💡 Khi viết insight</h3>
+      <div class="checklist-item"><div class="checklist-box"></div>Insight phải trả lời "vậy thì sao?", không chỉ mô tả chart.</div>
+      <div class="checklist-item"><div class="checklist-box"></div>Luôn có số liệu: mức tăng/giảm, tỷ trọng, nhóm tác động chính.</div>
+      <div class="checklist-item"><div class="checklist-box"></div>Nêu nguyên nhân khả nghi, không khẳng định quá mức.</div>
+      <div class="checklist-item"><div class="checklist-box"></div>Đề xuất hành động: kiểm tra, tối ưu, thử nghiệm, thay đổi quy trình.</div>
+      <div class="checklist-item"><div class="checklist-box"></div>Ghi giới hạn: thiếu dữ liệu nào, cần nguồn nào để kết luận chắc hơn.</div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- PORTFOLIO RUBRIC -->
+<div class="section-alt">
+<section class="section container" id="portfolio">
+  <div class="section-header">
+    <div class="section-eyebrow">Tự đánh giá</div>
+    <h2 class="section-title">Portfolio Rubric & <em>Senior Growth Path</em></h2>
+    <p class="section-desc">Biết bạn đang ở đâu và cần gì để lên level tiếp theo</p>
+  </div>
+  <div class="rubric-wrapper">
+    <table class="rubric-table">
+      <thead><tr><th>Tiêu chí</th><th>Junior</th><th>Mid-level</th><th>Senior</th></tr></thead>
+      <tbody>
+        <tr><td>SQL</td><td>Query đúng, biết JOIN/GROUP BY/CASE</td><td>CTE/window/cohort/RFM, hiểu grain</td><td>Tối ưu logic, validate metric, biết rủi ro production</td></tr>
+        <tr><td>BI/Dashboard</td><td>Dashboard rõ KPI cơ bản</td><td>Model tốt, DAX rõ, có drill-down</td><td>Dashboard gắn decision, governance, performance, adoption</td></tr>
+        <tr><td>Python</td><td>Clean/EDA cơ bản</td><td>Automation và notebook reproducible</td><td>Pipeline nhẹ, testing, documentation, code review</td></tr>
+        <tr><td>Storytelling</td><td>Mô tả được biểu đồ</td><td>Viết insight có bằng chứng</td><td>Dẫn dắt decision, biết caveat và trade-off</td></tr>
+        <tr><td>Business thinking</td><td>Trả lời câu hỏi được giao</td><td>Tự đề xuất hướng phân tích</td><td>Biến vấn đề mơ hồ thành roadmap phân tích</td></tr>
+        <tr><td>Documentation</td><td>Có README cơ bản</td><td>Có data dictionary và metric logic</td><td>SOP, changelog, QA checklist, stakeholder sign-off</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="font-size:18px;font-weight:800;color:var(--ink);margin:40px 0 20px;">📆 Mốc phát triển theo thời gian</h3>
+  <div class="timeline-grid">
+    <div class="timeline-card"><div class="timeline-month">0–3 tháng</div><h4>Nắm spreadsheet + SQL basic</h4><p>10 bài SQL easy, 3 file Excel/Sheets sạch, 1 dashboard</p></div>
+    <div class="timeline-card"><div class="timeline-month">3–6 tháng</div><h4>Ứng tuyển fresher/intern DA</h4><p>3 project: SQL, Power BI, Excel/Sheets; mock interview cơ bản</p></div>
+    <div class="timeline-card"><div class="timeline-month">6–12 tháng</div><h4>Dashboard vận hành & ad-hoc</h4><p>6–8 project, có README, biết validate số</p></div>
+    <div class="timeline-card"><div class="timeline-month">12–24 tháng</div><h4>Nâng cấp mid-level</h4><p>10–15 project, 2 case cohort/funnel/RFM, 1 automation</p></div>
+    <div class="timeline-card"><div class="timeline-month">24+ tháng</div><h4>Senior path</h4><p>Audit dashboard, data dictionary, decision memo, mentoring</p></div>
+  </div>
+</section>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- APPENDIX -->
+<section class="section container" id="appendix">
+  <div class="section-header">
+    <div class="section-eyebrow">Phụ lục</div>
+    <h2 class="section-title">Weekly Schedule & <em>Habit Tracker 12 tuần</em></h2>
+  </div>
+
+  <h3 style="font-size:17px;font-weight:800;color:var(--ink);margin-bottom:16px;">📅 Weekly Schedule mẫu</h3>
+  <div class="schedule-wrapper">
+    <table class="schedule-table">
+      <thead><tr><th>Ngày</th><th>Việc học</th><th>Output tối thiểu</th></tr></thead>
+      <tbody>
+        <tr><td>Thứ 2</td><td>Học concept mới: SQL/Power BI/Python</td><td>Note 1 trang + 3 ví dụ tự viết</td></tr>
+        <tr><td>Thứ 3</td><td>Làm bài tập nhỏ</td><td>5–10 query hoặc 1 bảng phân tích</td></tr>
+        <tr><td>Thứ 4</td><td>Áp dụng vào mini dataset</td><td>1 insight có số liệu</td></tr>
+        <tr><td>Thứ 5</td><td>Dựng visual/dashboard/report</td><td>1 chart hoặc 1 dashboard section</td></tr>
+        <tr><td>Thứ 6</td><td>Review lỗi, viết README, clean file</td><td>Changelog + checklist QA</td></tr>
+        <tr><td>Thứ 7</td><td>Mock interview hoặc case study</td><td>Ghi câu trả lời và điểm yếu</td></tr>
+        <tr><td>Chủ nhật</td><td>Nghỉ chủ động hoặc đọc thêm storytelling</td><td>1 before/after chart makeover</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="font-size:17px;font-weight:800;color:var(--ink);margin-bottom:16px;">🗓 Habit Tracker 12 tuần</h3>
+  <div class="habit-grid" id="habitGrid"></div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">🌱 DUA Edu</div>
+  <p>Kho Tài Nguyên Học Data · Hà Nội – 6.2026</p>
+  <p class="footer-motto">"Một người học Data mạnh lên không phải vì lưu nhiều link, mà vì biến link thành bài làm, biến bài làm thành project, biến project thành insight, và biến insight thành quyết định."</p>
+</footer>
+
+<button class="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+// Tabs
+function showTab(id) {
+  document.querySelectorAll('.resource-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.resource-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// Habit tracker
+(function() {
+  const grid = document.getElementById('habitGrid');
+  const items = ['Học', 'Luyện', 'Project', 'Review'];
+  for (let w = 1; w <= 12; w++) {
+    const card = document.createElement('div');
+    card.className = 'habit-card';
+    card.innerHTML = `<div class="habit-week">Tuần ${w}</div><div class="habit-checks">${
+      items.map(item => `<div class="habit-check">
+        <div class="habit-checkbox" onclick="this.style.background=this.style.background?'':'var(--green-pale)';this.textContent=this.textContent?'':'✓'" title="${item}"></div>
+        <span>${item}</span>
+      </div>`).join('')
+    }</div>`;
+    grid.appendChild(card);
+  }
+})();
+
+// Smooth active nav highlight
+const sections = document.querySelectorAll('section[id], div[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
+  navLinks.forEach(a => {
+    a.style.background = a.getAttribute('href') === '#' + current ? 'var(--green-bg)' : '';
+    a.style.color = a.getAttribute('href') === '#' + current ? 'var(--green-deep)' : '';
+  });
+}, { passive: true });
+</script>
+</body>
+</html>
